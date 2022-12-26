@@ -1,0 +1,509 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyN9wwkcWw3uptzmajKZTVOH",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/SyedLord/cv/blob/main/SyedLord%20Colab\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# **SYEDLORD**\n",
+        "\n",
+        "---\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "YR9kfI2VkTBM"
+      }
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "tPuLCnbGFmxo",
+        "cellView": "form"
+      },
+      "source": [
+        "#@markdown <br><center><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Google_Drive_logo.png/600px-Google_Drive_logo.png' height=\"50\" alt=\"Gdrive-logo\"/></center>\n",
+        "#@markdown <center><h3>Mount Gdrive to /content/drive</h3></center><br>\n",
+        "MODE = \"MOUNT\" #@param [\"MOUNT\", \"UNMOUNT\"]\n",
+        "#Mount your Gdrive! \n",
+        "from google.colab import drive\n",
+        "drive.mount._DEBUG = False\n",
+        "if MODE == \"MOUNT\":\n",
+        "  drive.mount('/content/drive', force_remount=True)\n",
+        "elif MODE == \"UNMOUNT\":\n",
+        "  try:\n",
+        "    drive.flush_and_unmount()\n",
+        "  except ValueError:\n",
+        "    pass\n",
+        "  get_ipython().system_raw(\"rm -rf /root/.config/Google/DriveFS\")"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "zswaZuVzo2c4"
+      },
+      "source": [
+        "#<br><center><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg/2560px-Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg.png' height=\"50\" alt=\"Gdrive-logo\"/></center>\n",
+        "#<center><h3>Mount oneDrive to /content/onedrive</h3></center><br>\n",
+        "\n",
+        "# Mount OneDrive to Google Colab\n",
+        "1.   Set Default browser\n",
+        "2.   Sign into your OneDrive account\n",
+        "3. Download Rclone: https://rclone.org/downloads/\n",
+        "4. Unzip rclone.zip\n",
+        "5. Open up the Terminal or the CMD from the start if you're using Windows and terminal if you're using MacOS or Linux\n",
+        "- 5.1. Windows: Open CMD from start menu; Follow one command from video; ⬛      rclone.exe authorize \"onedrive\"\n",
+        "- 5.2. Mac & Linux: Open Terminal; Follow one command from video; ⬛ sudo chmod +x rclone; ⬛ ./rclone authorize \"onedrive\"\n",
+        "6. Now it will open up the link in your browser (you have to sign in into your microsoft)\n",
+        "7. So you have successfully got the code in the cmd or terminal\n",
+        "8. Download & Install Latest Setup in colab: https://rclone.org/downloads/\n",
+        "\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!wget https://downloads.rclone.org/v1.53.2/rclone-v1.53.2-linux-amd64.deb\n",
+        "!apt install ./rclone-v1.53.2-linux-amd64.deb"
+      ],
+      "metadata": {
+        "id": "ULt4BWyaMpAS"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "wSLAXZv62a2w"
+      },
+      "source": [
+        "9. Authenticate One Drive\n",
+        "\n",
+        "\n",
+        "*   Type: n\n",
+        "*   Type the name: OneDrive\n",
+        "* Type 23 (onedrive is listed it's in the number 23)\n",
+        "* Now press Enter, Enter again two times\n",
+        "* Type: n\n",
+        "* Now you have to paste the code copy from CMD or Terminal\n",
+        "* You have to choose the number 1\n",
+        "* Type: 0 (We have the drive listed here)\n",
+        "* Type: y\n",
+        "* Type: q\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!rclone config"
+      ],
+      "metadata": {
+        "id": "CLX3JZCYMzzp"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "fqqHftaN5i6S"
+      },
+      "source": [
+        "10. Mount OneDrive"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!sudo mkdir /content/onedrive\n",
+        "!nohup rclone --vfs-cache-mode writes mount onedrive: /content/onedrive &"
+      ],
+      "metadata": {
+        "id": "zh9i8K1kM6GJ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "u5gtC3WRH5o-"
+      },
+      "source": [
+        "##<img src='https://raw.githubusercontent.com/biplobsd/OneClickRun/master/img/zip.png' height=\"30\" alt=\"netdata\"> __Extracte/Archive Zip/Tar/Rar__"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "cellView": "form",
+        "id": "k98WImeXH5pK"
+      },
+      "source": [
+        "# ============================= FORM ============================= #\n",
+        "# @markdown #### ⬅️ Extract Files\n",
+        "MODE = \"7Z\"  # @param [\"UNZIP\", \"UNTAR\", \"UNRAR\", \"7Z\"]\n",
+        "PATH_TO_FILE = \"\"  # @param {type:\"string\"}\n",
+        "extractPath = \"\"  # @param {type:\"string\"}\n",
+        "ARCHIVE_PASSWORD = \"\" #@param {type:\"string\"}\n",
+        "\n",
+        "# ================================================================ #\n",
+        "import os, urllib.request\n",
+        "HOME = os.path.expanduser(\"~\")\n",
+        "\n",
+        "if not os.path.exists(f\"{HOME}/.ipython/ocr.py\"):\n",
+        "    hCode = \"https://raw.githubusercontent.com/biplobsd/\" \\\n",
+        "                \"OneClickRun/master/res/ocr.py\"\n",
+        "    urllib.request.urlretrieve(hCode, f\"{HOME}/.ipython/ocr.py\")\n",
+        "\n",
+        "from ocr import (\n",
+        "    runSh,\n",
+        "    checkAvailable,\n",
+        ")\n",
+        "\n",
+        "def extractFiles():\n",
+        "    global extractPath\n",
+        "    if ARCHIVE_PASSWORD:\n",
+        "      passADD = f'-P {ARCHIVE_PASSWORD}'\n",
+        "    else:\n",
+        "      passADD = ''\n",
+        "    if not extractPath:\n",
+        "      extractPath = \"/content/extract\"\n",
+        "    os.makedirs(extractPath, exist_ok=True)\n",
+        "    if MODE == \"UNZIP\":\n",
+        "        runSh('unzip '+passADD+f' \"{PATH_TO_FILE}\" -d \"{extractPath}\"', output=True)\n",
+        "    elif MODE == \"UNRAR\":\n",
+        "        runSh(f'unrar x \"{PATH_TO_FILE}\" \"{extractPath}\" '+passADD+' -o+', output=True)\n",
+        "    elif MODE == \"UNTAR\":\n",
+        "        runSh(f'tar -C \"{extractPath}\" -xvf \"{PATH_TO_FILE}\"', output=True)\n",
+        "    else:\n",
+        "        runSh(f'7z x \"{PATH_TO_FILE}\" -o{extractPath} '+passADD, output=True)\n",
+        "\n",
+        "\n",
+        "extractFiles()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "cellView": "form",
+        "id": "XO8dzdyyH5pT"
+      },
+      "source": [
+        "# ============================= FORM ============================= #\n",
+        "# @markdown #### ⬅️ Archive Files\n",
+        "MODE = \"ZIP\" #@param [\"ZIP\", \"TAR\", \"7Z\"]\n",
+        "FILENAME = \"\"  # @param {type:\"string\"}\n",
+        "PATH_TO_FILE = \"\"  # @param {type:\"string\"}\n",
+        "ARCHIVE_PASSWORD = \"\" #@param {type:\"string\"}\n",
+        "\n",
+        "# option supports b k m g (bytes, kilobytes, megabytes, gigabytes)\n",
+        "SPLIT = \"no\" #@param [\"1g\", \"2g\", \"3g\", \"4g\", \"5g\", \"no\"]\n",
+        "\n",
+        "\n",
+        "compress = 4#@param  {type:\"slider\", min:0, max:9, step:0}\n",
+        "#@markdown <font size=2%>Use this to path separate between to this character `|`. Ex `path/to /1 | path/to/2` </br>#Split only in zip mode.(Only for noobs)\n",
+        "# ================================================================ #\n",
+        "from pathlib import PurePosixPath\n",
+        "\n",
+        "pathList = PATH_TO_FILE.split('|')\n",
+        "if MODE == \"ZIP\":\n",
+        "    if not FILENAME:\n",
+        "      FILENAME = \"/content/NEW_FILE.ZIP\"\n",
+        "    if ARCHIVE_PASSWORD:\n",
+        "      passADD = f'--password \"{ARCHIVE_PASSWORD}\"'\n",
+        "    else:\n",
+        "      passADD = ''\n",
+        "    splitC = f\"-s {SPLIT}\" if not 'no' in SPLIT else \"\" \n",
+        "    for part in pathList:\n",
+        "      pathdic = PurePosixPath(part.strip())\n",
+        "      parent = pathdic.parent\n",
+        "      partName = pathdic.parts[-1]\n",
+        "      cmd = f'cd \"{parent}\" && zip {passADD} -{compress} {splitC} -v -r -u \"{FILENAME}\" \"{partName}\"'\n",
+        "      !$cmd\n",
+        "elif MODE == \"TAR\":\n",
+        "    if not FILENAME:\n",
+        "      FILENAME = \"/content/NEW_FILE\"\n",
+        "    cmd = f'GZIP=-{compress} tar -zcvf \"{FILENAME}.tar.gz\" {PATH_TO_FILE}'\n",
+        "    !$cmd\n",
+        "else:\n",
+        "    if not FILENAME:\n",
+        "        FILENAME = \"/content/NEW_FILE\"\n",
+        "    for part in pathList:\n",
+        "      pathdic = PurePosixPath(part.strip())\n",
+        "      parent = pathdic.parent\n",
+        "      partName = pathdic.parts[-1]\n",
+        "      cmd = f'cd \"{parent}\" && 7z a -mx={compress} \"{FILENAME}.7z\" \"{partName}\"'\n",
+        "      !$cmd\n"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "kSvUMUuTPX7r"
+      },
+      "source": [
+        "##![alt text](https://mega.nz/favicon.ico?v=3) __TRANSFER to MEGA__\n",
+        "\n",
+        "\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "q3uC2Lo5R6N9",
+        "cellView": "form"
+      },
+      "source": [
+        "# @markdown <center><h2>INPUT YOUR MEGA ID</h2></center><br>\n",
+        "from functools import wraps\n",
+        "import errno\n",
+        "import os\n",
+        "import signal\n",
+        "import subprocess\n",
+        "import shlex\n",
+        "\n",
+        "\n",
+        "class TimeoutError(Exception):\n",
+        "    pass\n",
+        "\n",
+        "\n",
+        "def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):\n",
+        "    def decorator(func):\n",
+        "        def _handle_timeout(signum, frame):\n",
+        "            raise TimeoutError(error_message)\n",
+        "\n",
+        "        def wrapper(*args, **kwargs):\n",
+        "            signal.signal(signal.SIGALRM, _handle_timeout)\n",
+        "            signal.alarm(seconds)\n",
+        "            try:\n",
+        "                result = func(*args, **kwargs)\n",
+        "            finally:\n",
+        "                signal.alarm(0)\n",
+        "            return result\n",
+        "\n",
+        "        return wraps(func)(wrapper)\n",
+        "\n",
+        "    return decorator\n",
+        "\n",
+        "\n",
+        "if not os.path.exists(\"/root/.ipython/ocr.py\"):\n",
+        "    from subprocess import run\n",
+        "    from shlex import split\n",
+        "\n",
+        "    shellCmd = \"wget -qq https://raw.githubusercontent.com/biplobsd/OneClickRun/master/res/ocr.py \\\n",
+        "                    -O /root/.ipython/ocr.py\"\n",
+        "    run(split(shellCmd))\n",
+        "from ocr import runSh\n",
+        "\n",
+        "@timeout(10)\n",
+        "def runShT(args):\n",
+        "    return runSh(args, output=True)\n",
+        "\n",
+        "\n",
+        "# MEGAcmd installing\n",
+        "if not os.path.exists(\"/usr/bin/mega-cmd\"):\n",
+        "    print(\"Installing MEGA ...\")\n",
+        "    runSh('sudo apt-get -y update')\n",
+        "    runSh('sudo apt-get -y install libmms0 libc-ares2 libc6 libcrypto++6 libgcc1 libmediainfo0v5 libpcre3 libpcrecpp0v5 libssl1.1 libstdc++6 libzen0v5 zlib1g apt-transport-https')\n",
+        "    runSh('sudo curl -sL -o /var/cache/apt/archives/MEGAcmd.deb https://mega.nz/linux/MEGAsync/Debian_9.0/amd64/megacmd-Debian_9.0_amd64.deb', output=True)\n",
+        "    runSh('sudo dpkg -i /var/cache/apt/archives/MEGAcmd.deb', output=True)\n",
+        "    print(\"MEGA is installed.\")\n",
+        "else:\n",
+        "    !pkill mega-cmd\n",
+        "\n",
+        "# INPUT YOUR MEGA ID\n",
+        "\n",
+        "USERNAME = \"\"  # @param {type:\"string\"}\n",
+        "PASSWORD = \"\"  # @param {type:\"string\"}\n",
+        "if not (USERNAME == \"\" or PASSWORD == \"\"):\n",
+        "    try:\n",
+        "        runShT(f\"mega-login {USERNAME} {PASSWORD}\")\n",
+        "    except TimeoutError:\n",
+        "        runSh('mega-whoami', output=True)\n",
+        "else:\n",
+        "    print(\"Please Input your Mega IDs.\")\n"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "E3N6hyM2I6hk",
+        "cellView": "form"
+      },
+      "source": [
+        "import time\n",
+        "import subprocess\n",
+        "import contextlib\n",
+        "from IPython.display import clear_output\n",
+        "# @markdown <br><center><img src='https://www.impactcomputing.co.uk/uploads/files/services/managed-office-365.svg' height=\"100\" alt=\"netdata\"/></center>\n",
+        "# @markdown <center><h2>TRANSFERE NOW</h2></center><br>\n",
+        "# TRANSFERE NOW\n",
+        "\n",
+        "PATH_TO_FILE = \"\"  # @param {type:\"string\"}\n",
+        "# Unix, Windows and old Macintosh end-of-line\n",
+        "newlines = ['\\n', '\\r\\n', '\\r']\n",
+        "\n",
+        "\n",
+        "def unbuffered(proc, stream='stdout'):\n",
+        "    stream = getattr(proc, stream)\n",
+        "    with contextlib.closing(stream):\n",
+        "        while True:\n",
+        "            out = []\n",
+        "            last = stream.read(1)\n",
+        "            # Don't loop forever\n",
+        "            if last == '' and proc.poll() is not None:\n",
+        "                break\n",
+        "            while last not in newlines:\n",
+        "                # Don't loop forever\n",
+        "                if last == '' and proc.poll() is not None:\n",
+        "                    break\n",
+        "                out.append(last)\n",
+        "                last = stream.read(1)\n",
+        "            out = ''.join(out)\n",
+        "            yield out\n",
+        "\n",
+        "\n",
+        "def transfare():\n",
+        "    cmd = ['mega-put', PATH_TO_FILE, '/colab']\n",
+        "    proc = subprocess.Popen(\n",
+        "        cmd,\n",
+        "        stdout=subprocess.PIPE,\n",
+        "        stderr=subprocess.STDOUT,\n",
+        "        # Make all end-of-lines '\\n'\n",
+        "        universal_newlines=True,\n",
+        "    )\n",
+        "    for line in unbuffered(proc):\n",
+        "        clear_output(wait=True)\n",
+        "        print(line)\n",
+        "\n",
+        "try:\n",
+        "    transfare()\n",
+        "except FileNotFoundError:\n",
+        "    print(\"Login your account!\")\n"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "XlDyLy_JZJ03",
+        "cellView": "form"
+      },
+      "source": [
+        "import sys, os, urllib.request\n",
+        "import time\n",
+        "import subprocess\n",
+        "import contextlib\n",
+        "from IPython.display import clear_output\n",
+        "\n",
+        "HOME = os.path.expanduser(\"~\")\n",
+        "if not os.path.exists(f\"{HOME}/.ipython/ocr.py\"):\n",
+        "    hCode = \"https://raw.githubusercontent.com/biplobsd/\" \\\n",
+        "                \"OneClickRun/master/res/ocr.py\"\n",
+        "    urllib.request.urlretrieve(hCode, f\"{HOME}/.ipython/ocr.py\")\n",
+        "\n",
+        "from ocr import (\n",
+        "    runSh,\n",
+        "    loadingAn,\n",
+        ")\n",
+        "#@title MEGA public link download\n",
+        "URL = \"\" #@param {type:\"string\"}\n",
+        "OUTPUT_PATH = \"\" #@param {type:\"string\"}\n",
+        "if not OUTPUT_PATH:\n",
+        "  os.makedirs(\"downloads\", exist_ok=True)\n",
+        "  OUTPUT_PATH = \"downloads\"\n",
+        "# MEGAcmd installing\n",
+        "if not os.path.exists(\"/usr/bin/mega-cmd\"):\n",
+        "    loadingAn()\n",
+        "    print(\"Installing MEGA ...\")\n",
+        "    runSh('sudo apt-get -y update')\n",
+        "    runSh('sudo apt-get -y install libmms0 libc-ares2 libc6 libcrypto++6 libgcc1 libmediainfo0v5 libpcre3 libpcrecpp0v5 libssl1.1 libstdc++6 libzen0v5 zlib1g apt-transport-https')\n",
+        "    runSh('sudo curl -sL -o /var/cache/apt/archives/MEGAcmd.deb https://mega.nz/linux/MEGAsync/Debian_9.0/amd64/megacmd-Debian_9.0_amd64.deb', output=True)\n",
+        "    runSh('sudo dpkg -i /var/cache/apt/archives/MEGAcmd.deb', output=True)\n",
+        "    print(\"MEGA is installed.\")\n",
+        "    clear_output()\n",
+        "\n",
+        "# Unix, Windows and old Macintosh end-of-line\n",
+        "newlines = ['\\n', '\\r\\n', '\\r']\n",
+        "\n",
+        "def unbuffered(proc, stream='stdout'):\n",
+        "    stream = getattr(proc, stream)\n",
+        "    with contextlib.closing(stream):\n",
+        "        while True:\n",
+        "            out = []\n",
+        "            last = stream.read(1)\n",
+        "            # Don't loop forever\n",
+        "            if last == '' and proc.poll() is not None:\n",
+        "                break\n",
+        "            while last not in newlines:\n",
+        "                # Don't loop forever\n",
+        "                if last == '' and proc.poll() is not None:\n",
+        "                    break\n",
+        "                out.append(last)\n",
+        "                last = stream.read(1)\n",
+        "            out = ''.join(out)\n",
+        "            yield out\n",
+        "\n",
+        "\n",
+        "def transfare():\n",
+        "    import codecs\n",
+        "    decoder = codecs.getincrementaldecoder(\"UTF-8\")()\n",
+        "    cmd = [\"mega-get\", URL, OUTPUT_PATH]\n",
+        "    proc = subprocess.Popen(\n",
+        "        cmd,\n",
+        "        stdout=subprocess.PIPE,\n",
+        "        stderr=subprocess.STDOUT,\n",
+        "        # Make all end-of-lines '\\n'\n",
+        "        universal_newlines=True,\n",
+        "    )\n",
+        "    for line in unbuffered(proc):\n",
+        "        print(line)\n",
+        "        \n",
+        "\n",
+        "\n",
+        "transfare()\n",
+        "\n"
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
